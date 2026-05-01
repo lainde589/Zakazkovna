@@ -1,6 +1,5 @@
 using Zakázkovna.Models;
 using Zakázkovna.Services;
-using Zakázkovna.Utils;
 
 namespace Zakázkovna
 {

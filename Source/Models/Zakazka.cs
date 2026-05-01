@@ -1,5 +1,3 @@
-using System;
-
 namespace Zakázkovna.Models
 {
     // Datový model jedné zakázky – uchovává všechny informace o projektu

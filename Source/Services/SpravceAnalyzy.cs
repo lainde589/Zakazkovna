@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Zakázkovna.Models;
 
 namespace Zakázkovna.Services

@@ -1,5 +1,3 @@
-using System;
-
 namespace Zakázkovna.Models
 {
     // Přenosový objekt pro výsledky analýzy – používá se pouze pro předání dat do UI

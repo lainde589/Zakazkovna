@@ -1,5 +1,3 @@
-using System;
-
 namespace Zakázkovna.Models
 {
     // Profil uživatele – ukládá se do souboru profil.json

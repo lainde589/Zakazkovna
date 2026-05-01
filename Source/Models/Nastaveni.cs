@@ -1,5 +1,3 @@
-using System;
-
 namespace Zakázkovna.Models
 {
     // Systémová nastavení aplikace – ukládají se do souboru nastaveni.json
