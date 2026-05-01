@@ -1,0 +1,16 @@
+# Build artifacts (Temporary compilation files)
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio (IDE settings and user-specific files)
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Visual Studio Code (VS Code settings and workspace files)
+.vscode/
+
+# Operating System (System Trash)
+Thumbs.db
+.DS_Store
