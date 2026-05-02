@@ -4,18 +4,18 @@
 
 A professional console-based application designed for efficient management of business orders. Developed as a semester project for the **Czech University of Life Sciences Prague (ČZU)**.
 
-## 🚀 Features
+## Features
 * **Order Management**: Add, list, and edit business orders.
 * **Configuration**: Manage user profiles and application settings via JSON.
 * **Data Storage**: Reliable data handling using CSV and JSON formats.
 * **Architecture**: Clean project structure following professional development standards.
 
-## 📂 Project Structure
+## Project Structure
 * **App/**: Contains the standalone executable (`.exe`) and the `Database/` folder with data files.
 * **Source/**: Full C# source code, including `Models`, `Services`, and `Utils`.
 * **Zakázkovna.sln**: Visual Studio Solution file for easy project access.
 
-## 🛠 Tech Stack
+## Tech Stack
 * **Language**: C#
 * **Framework**: .NET 9.0
 * **Data**: JSON, CSV
@@ -43,3 +43,12 @@ Profesionální konzolová aplikace určená pro efektivní správu obchodních 
 * **Jazyk**: C#
 * **Framework**: .NET 9.0
 * **Data**: JSON, CSV
+
+---
+
+## Author / Autor
+
+**Ariet Muzirapov**
+Faculty of Economics and Management, ČZU
+Informatics major
+Prague, 2026
