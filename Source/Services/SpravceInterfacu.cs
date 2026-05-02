@@ -184,7 +184,7 @@ namespace Zakázkovna.Services
                         ZobrazitUspesnouZpravu("\n [✓] Email aktualizován!");
                         CekatNaNavrat(); break;
                     case 3:
-                        p.MesicniCil = ZiskatCislo("\n Zadejte nový měsíční cíl (např. 50000 Kč)", 0, 1000000);
+                        p.MesicniCil = ZiskatCislo("\n Zadejte nový měsíční cíl", 0, 1000000);
                         ZobrazitUspesnouZpravu("\n [✓] Měsíční cíl aktualizován!");
                         CekatNaNavrat(); break;
                     case 4:
@@ -192,7 +192,7 @@ namespace Zakázkovna.Services
                         ZobrazitUspesnouZpravu($"\n [✓] Jazyk byl změněn na {n.Jazyk}!");
                         CekatNaNavrat(); break;
                     case 5:
-                        n.Mena = VybratZMoznosti("\n Vyberte měnu", new[] { "Kč", "EUR", "USD" });
+                        n.Mena = VybratZMoznosti("\n Vyberte měnu", new[] { "CZK", "EUR", "USD" });
                         ZobrazitUspesnouZpravu($"\n [✓] Měna byla změněna na {n.Mena}!");
                         CekatNaNavrat(); break;
                     case 0:
@@ -218,13 +218,13 @@ namespace Zakázkovna.Services
 
 
         // Zobrazí výsledky analýzy – celkovou hodnotu, procento plnění a počet zakázek
-        public void ZobrazitPrehled(DataPrehledu d, string jmeno)
+        public void ZobrazitPrehled(string jmeno, DataPrehledu d, string aktualniMena)
         {
             ZobrazitZahlaviSekce("Celkový přehled");
 
             ZobrazitUspesnouZpravu($" Vítejte zpět, {jmeno}! \n\n");
 
-            Console.WriteLine($" - Celková hodnota:   {d.CelkovaHodnota} Kč");
+            Console.WriteLine($" - Celková hodnota:   {d.CelkovaHodnota} {aktualniMena}");
             // Math.Round zaokrouhlí na 1 desetinné místo, aby výsledek vypadal přehledně
             Console.WriteLine($" - Plnění plánu:      {Math.Round(d.ProcentoPlneni, 1)} %");
             Console.WriteLine($" - Počet zakázek:     {d.PocetZakazek}");

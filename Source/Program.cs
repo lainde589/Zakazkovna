@@ -88,7 +88,7 @@ namespace Zakázkovna
                     case 6:
                         // Nejdřív spočítáme data, pak je předáme do UI k zobrazení
                         var data = SA.SpocitatUkazatele(SZ.SeznamZakazek, SK.Profil);
-                        SI.ZobrazitPrehled(data, SK.Profil.Jmeno);
+                        SI.ZobrazitPrehled(SK.Profil.Jmeno, data, SK.Nastaveni.Mena);
                         SpravceInterfacu.CekatNaNavrat(); break;
 
                     case 7:
