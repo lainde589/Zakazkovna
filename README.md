@@ -48,7 +48,7 @@ Profesionální konzolová aplikace určená pro efektivní správu obchodních 
 
 ## Author / Autor
 
-**Ariet Muzirapov**
-Faculty of Economics and Management, ČZU
-Informatics major
+**Ariet Muzirapov**  
+Faculty of Economics and Management, ČZU  
+Informatics major  
 Prague, 2026
