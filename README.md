@@ -13,7 +13,7 @@ A professional console-based application designed for efficient management of bu
 ## Project Structure
 * **App/**: contains the standalone executable (`.exe`) and the `Database/` folder with data files.
 * **Source/**: full C# source code, including `Models`, `Services`, and `Utils`.
-* **Zakázkovna.sln**: visual Studio Solution file for easy project access.
+* **Zakázkovna.sln**: Visual Studio Solution file for easy project access.
 
 ## Tech Stack
 * **Language**: C#
