@@ -8,10 +8,11 @@ namespace Zakázkovna
         public static void Main(string[] args)
         {
             // Vytvoříme instance všech správců – každý má svou odpovědnost
-            SpravceZakazek SZ = new SpravceZakazek();       // správa zakázek (CRUD + CSV)
-            SpravceInterfacu SI = new SpravceInterfacu();   // zobrazení a vstup od uživatele
-            SpravceKonfigurace SK = new SpravceKonfigurace(); // načtení profilu a nastavení z JSON
-            SpravceAnalyzy SA = new SpravceAnalyzy();       // výpočet KPI ukazatelů
+            SpravceZakazek SZ = new SpravceZakazek();           // správa zakázek (CRUD)
+            SpravceKonfigurace SK = new SpravceKonfigurace();   // načtení profilu a nastavení z JSON
+            SpravceInterfacu SI = new SpravceInterfacu(SK);     // zobrazení a vstup od uživatele
+                                                                // vstříknutí závislosti (předáváme existující konfiguraci do rozhraní)
+            SpravceAnalyzy SA = new SpravceAnalyzy();           // výpočet KPI ukazatelů
 
             // Načteme zakázky z CSV souboru hned při startu programu
             SZ.NacistZCsv();
@@ -21,13 +22,22 @@ namespace Zakázkovna
             // Hlavní smyčka programu – běží, dokud uživatel nezvolí "Uzavřít" (0)
             while (beziProgram)
             {
+                // Dynamické nastavení barevného schématu podle uživatelské volby uložené v JSONu
+                switch (SK.Nastaveni.Tema)
+                {
+                    case "Zelená": SI.BarvaAplikace = ConsoleColor.Green; break;
+                    case "Azurová": SI.BarvaAplikace = ConsoleColor.Cyan; break;
+                    default: SI.BarvaAplikace = ConsoleColor.Yellow; break;
+                }
+                
+                
                 SI.ZobrazitHlavniMenu();
                 byte volba = SI.ZiskatVolbuMenu();
 
                 switch (volba)
                 {
                     case 1:
-                        SI.ZobrazitZahlaviSekce("Přidání nové zakázky");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("pridatZakazku"));
                         // Vygenerujeme unikátní ID pro novou zakázku
                         Zakazka novaZakazka = SI.ZobrazitFormularNoveZakazky(SZ.SeznamZakazek);
 
@@ -41,13 +51,13 @@ namespace Zakázkovna
 
 
                     case 2:
-                        SI.ZobrazitZahlaviSekce("Úprava zakázky");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("upravitZakazku"));
                         SI.ZobrazitInformacniZpravu(" [i] Sekce 'Úprava zakázky' je momentálně ve vývoji (plánováno pro verzi 2.0).");
                         SpravceInterfacu.CekatNaNavrat(); break;
 
 
                     case 3:
-                        SI.ZobrazitZahlaviSekce("Smazání zakázky");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("smazatZakazku"));
                         string IDZakazkyKeZmazani = SI.ZiskatIDProHledani();
                         Zakazka ZakazkaKeZmazani = SZ.VyhledatZakazkuPodleID(IDZakazkyKeZmazani);
 
@@ -72,13 +82,13 @@ namespace Zakázkovna
 
 
                     case 4:
-                        SI.ZobrazitZahlaviSekce("Seznam všech zakázek");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("zobrazitZakazky"));
                         SI.ZobrazitVsechnyZakazky(SZ.SeznamZakazek);
                         SpravceInterfacu.CekatNaNavrat(); break;
 
 
                     case 5:
-                        SI.ZobrazitZahlaviSekce("Vyhledávání zakázky");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("vyhledatZakazku"));
                         string hledaneID = SI.ZiskatIDProHledani();
                         Zakazka nalezenaZakazka = SZ.VyhledatZakazkuPodleID(hledaneID);
                         SI.ZobrazitHledanouZakazku(nalezenaZakazka);
@@ -86,26 +96,28 @@ namespace Zakázkovna
 
 
                     case 6:
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("prehledAAnalyza"));
                         // Nejdřív spočítáme data, pak je předáme do UI k zobrazení
                         var data = SA.SpocitatUkazatele(SZ.SeznamZakazek, SK.Profil);
-                        SI.ZobrazitPrehled(SK.Profil.Jmeno, data, SK.Nastaveni.Mena);
+                        SI.ZobrazitPrehled(SK.Profil.Jmeno, data);
                         SpravceInterfacu.CekatNaNavrat(); break;
 
                     case 7:
-                        SI.ZobrazitZahlaviSekce("O aplikaci");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("oAplikaci"));
                         SI.ZobrazitOAplikaci();
                         SpravceInterfacu.CekatNaNavrat(); break;
 
 
                     case 8:
-                        SI.ZobrazitZahlaviSekce("O autorovi");
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("oAutorovi"));
                         SI.ZobrazitOAutorovi();
                         SpravceInterfacu.CekatNaNavrat(); break;
 
 
                     case 9:
-                        // Po návratu z nastavení hned uložíme případné změny do JSON
+                        SI.ZobrazitZahlaviSekce(SI.ZiskatPreklad("nastaveniAProfil"));
                         SI.SpravovatNastaveniAProfil(SK.Profil, SK.Nastaveni);
+                        // Po návratu z nastavení hned uložíme případné změny do JSON
                         SK.UlozitVsechnyZmeny();
                         break;
 

@@ -1,0 +1,75 @@
+{
+    "Čeština": {
+        "pridatZakazku": "Přidat novou zakázku",
+        "upravitZakazku": "Upravit zakázku",
+        "smazatZakazku": "Smazat zakázku",
+        "zobrazitZakazky": "Zobrazit všechny zakázky",
+        "vyhledatZakazku": "Vyhledat zakázku",
+        "prehledAAnalyza": "Přehled a analýza",
+        "oAplikaci": "O aplikaci",
+        "oAutorovi": "O autorovi",
+        "nastaveniAProfil": "Nastavení a profil",
+        "uzavrit": "Uzavřít",
+        
+        "uvitani": "  Vítejte ve Zakázkovně!\n",
+        "vyberteMenu": "  Vyberte co budeme dělat:\n",
+        "vaseVolba": "\n Vaše volba: "
+    },
+    
+    
+    "English": {
+        "hlavniMenu": "Main menu",
+        "pridatZakazku": "Create new order",
+        "upravitZakazku": "Edit order",
+        "smazatZakazku": "Delete order",
+        "zobrazitZakazky": "Display all orders",
+        "vyhledatZakazku": "Search order",
+        "prehledAAnalyza": "Overview and analytics",
+        "oAplikaci": "About app",
+        "oAutorovi": "About author",
+        "nastaveniAProfil": "Settings & profile",
+        "uzavrit": "Close app",
+        
+        "uvitani": "  Welcome to Zakázkovna!\n",
+        "vyberteMenu": "  Choose an action:\n",
+        "vaseVolba": "\n Your choice: "
+    },
+    
+    
+    "Русский": {
+        "hlavniMenu": "Главное меню",
+        "pridatZakazku": "Добавить новый заказ",
+        "upravitZakazku": "Редактировать заказ",
+        "smazatZakazku": "Удалить заказ",
+        "zobrazitZakazky": "Отобразить все заказы",
+        "vyhledatZakazku": "Искать заказ",
+        "prehledAAnalyza": "Обзор и аналитика",
+        "oAplikaci": "О приложении",
+        "oAutorovi": "Об авторе",
+        "nastaveniAProfil": "Настройки и профиль",
+        "uzavrit": "Закрыть",
+        
+        "uvitani": "  Добро пожаловать в Zakázkovna!\n",
+        "vyberteMenu": "  Выберите действие:\n",
+        "vaseVolba": "\n Ваш выбор: "
+    },
+    
+    
+    "Кыргызча": {
+        "hlavniMenu": "Башкы меню",
+        "pridatZakazku": "Жаңы буйрутма кошуу",
+        "upravitZakazku": "Буйрутманы өзгөртүү",
+        "smazatZakazku": "Буйрутманы өчүрүү",
+        "zobrazitZakazky": "Бардык буйрутмаларды көрсөтүү",
+        "vyhledatZakazku": "Буйрутманы издөө",
+        "prehledAAnalyza": "Сереп жана талдама",
+        "oAplikaci": "Тиркеме жөнүндө",
+        "oAutorovi": "Автор жөнүндө",
+        "nastaveniAProfil": "Орнотуулар жана профиль",
+        "uzavrit": "Жабуу",
+        
+        "uvitani": "  Zakázkovna'га кош келиңиз!\n",
+        "vyberteMenu": "  Аракетти тандаңыз:\n",
+        "vaseVolba": "\n Сиздин тандооңуз: "
+    }
+}

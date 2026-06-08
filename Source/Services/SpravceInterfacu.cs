@@ -7,31 +7,43 @@ namespace Zakázkovna.Services
     // Neobsahuje žádnou business logiku – pouze komunikuje s uživatelem
     public class SpravceInterfacu
     {
+        public ConsoleColor BarvaAplikace { get; set; } =  ConsoleColor.Yellow;
+        // Reference na globální konfiguraci (zajišťuje konzistentní přístup k aktuálnímu jazyku a slovníkům)
+        private readonly SpravceKonfigurace SK;
+        
+        // Konstruktor využívající Dependency Injection (předání závislosti pro lepší správu stavu a paměti)
+        public SpravceInterfacu(SpravceKonfigurace konfigurace)
+        {
+            SK = konfigurace;
+        }
+        
         // Vymaže konzoli a zobrazí hlavní nabídku programu
         public void ZobrazitHlavniMenu()
         {
             Console.Clear();
-            ZobrazitZahlaviSekce("Hlavní menu");
-            ZobrazitInformacniZpravu("  Vítejte ve Zakázkovně!\n");
-            ZobrazitInformacniZpravu("  Vyberte, co budeme dělat:\n");
+            ZobrazitZahlaviSekce(ZiskatPreklad("hlavniMenu"));
+            
+            // Vykreslení položek hlavního menu s využitím dynamického překladu
+            ZobrazitTematickouZpravu(ZiskatPreklad("uvitani"));
+            ZobrazitTematickouZpravu(ZiskatPreklad("vyberteMenu"));
 
-            Console.WriteLine(" 1. Přidat novou zakázku");
-            Console.WriteLine(" 2. Upravit zakázku");
-            Console.WriteLine(" 3. Smazat zakázku");
-            Console.WriteLine(" 4. Zobrazit všechny zakázky");
-            Console.WriteLine(" 5. Vyhledat zakázku");
-            Console.WriteLine(" 6. Přehled a analýza");
-            Console.WriteLine(" 7. O aplikaci");
-            Console.WriteLine(" 8. O autorovi");
-            Console.WriteLine(" 9. Nastavení a profil");
-            Console.WriteLine(" 0. Uzavřít");
+            Console.WriteLine(" 1. " + ZiskatPreklad("pridatZakazku"));
+            Console.WriteLine(" 2. " + ZiskatPreklad("upravitZakazku"));
+            Console.WriteLine(" 3. " + ZiskatPreklad("smazatZakazku"));
+            Console.WriteLine(" 4. " + ZiskatPreklad("zobrazitZakazky"));
+            Console.WriteLine(" 5. " + ZiskatPreklad("vyhledatZakazku"));
+            Console.WriteLine(" 6. " + ZiskatPreklad("prehledAAnalyza"));
+            Console.WriteLine(" 7. " + ZiskatPreklad("oAplikaci"));
+            Console.WriteLine(" 8. " + ZiskatPreklad("oAutorovi"));
+            Console.WriteLine(" 9. " + ZiskatPreklad("nastaveniAProfil"));
+            Console.WriteLine(" 0. " + ZiskatPreklad("uzavrit"));
         }
 
 
         // Přečte volbu z hlavního menu (číslo 0–9)
         public byte ZiskatVolbuMenu()
         {
-            return ZiskatVolbu("\n Vaše volba: ", 0, 9);
+            return ZiskatVolbu(ZiskatPreklad("vaseVolba"), 0, 9);
         }
 
         // Zobrazí formulář pro zadání nové zakázky a vrátí vyplněný objekt
@@ -107,11 +119,11 @@ namespace Zakázkovna.Services
         }
 
 
-        // Vykreslí záhlaví sekce – žluté orámování s názvem stránky
+        // Vykreslí záhlaví sekce – orámování s názvem stránky
         public void ZobrazitZahlaviSekce(string nazevSekce)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = BarvaAplikace;
             Console.WriteLine("======================================");
             Console.WriteLine($"  Zakázkovna | {nazevSekce}");
             Console.WriteLine("======================================\n");
@@ -120,11 +132,11 @@ namespace Zakázkovna.Services
 
         public void ZobrazitOAplikaci()
         {
-            ZobrazitInformacniZpravu("  Zakázkovna? Co to je? \n");
+            ZobrazitTematickouZpravu("  Zakázkovna? Co to je? \n");
             Console.WriteLine(" Konzolová aplikace typu CRM/ERP určená pro freelancery a malé firmy.");
             Console.WriteLine(" Systém umožňuje efektivní evidenci projektů, automatizaci, \n administrativních procesů a hloubkovou analýzu obchodních výsledků.");
 
-            ZobrazitInformacniZpravu("\n  Co Zakázkovna umí? \n");
+            ZobrazitTematickouZpravu("\n  Co Zakázkovna umí? \n");
             Console.WriteLine(" * 1. Evidence - vše se ukládá do CSV, které otevřete i v Excelu.");
             Console.WriteLine(" * 2. Pořádek - automatické číslování zakázek (ID 1001, 1002...).");
             Console.WriteLine(" * 3. Kontrola - validace vstupů nepustí chyby do vaší databáze.");
@@ -147,8 +159,6 @@ namespace Zakázkovna.Services
         // Zobrazí aktuální hodnoty profilu a nastavení
         public void ZobrazitNastaveniAProfil(Profil p, Nastaveni n)
         {
-            ZobrazitZahlaviSekce("Nastavení a profil");
-
             ZobrazitInformacniZpravu(" [!] POZNÁMKA: Tato nastavení jsou aktuálně ve fázi vývoje.");
             ZobrazitInformacniZpravu("     Změny se uloží, ale zatím neovlivňují některé funkce.");
 
@@ -159,7 +169,7 @@ namespace Zakázkovna.Services
 
             Console.WriteLine("\n [ SYSTÉMOVÉ NASTAVENÍ ] \n");
             ZobrazitMoznosti("4.Jazyk", new[] { "Čeština", "English", "Кыргызча", "Русский" }, n.Jazyk);
-            ZobrazitMoznosti("5.Měna ", new[] { "CZK", "EUR", "USD" }, n.Mena);
+            ZobrazitMoznosti("5.Téma", new[] { "Žlutá", "Zelená", "Azurová" }, n.Tema);
         }
 
 
@@ -192,8 +202,8 @@ namespace Zakázkovna.Services
                         ZobrazitUspesnouZpravu($"\n [✓] Jazyk byl změněn na {n.Jazyk}!");
                         CekatNaNavrat(); break;
                     case 5:
-                        n.Mena = VybratZMoznosti("\n Vyberte měnu", new[] { "CZK", "EUR", "USD" });
-                        ZobrazitUspesnouZpravu($"\n [✓] Měna byla změněna na {n.Mena}!");
+                        n.Tema = VybratZMoznosti("\n Vyberte barvu", new[] { "Žlutá", "Zelená", "Azurová" });
+                        ZobrazitUspesnouZpravu($"\n [✓] Barva byla změněna na {n.Tema}!");
                         CekatNaNavrat(); break;
                     case 0:
                         return; // Návrat do hlavního menu
@@ -218,13 +228,11 @@ namespace Zakázkovna.Services
 
 
         // Zobrazí výsledky analýzy – celkovou hodnotu, procento plnění a počet zakázek
-        public void ZobrazitPrehled(string jmeno, DataPrehledu d, string aktualniMena)
+        public void ZobrazitPrehled(string jmeno, DataPrehledu d)
         {
-            ZobrazitZahlaviSekce("Celkový přehled");
-
             ZobrazitUspesnouZpravu($" Vítejte zpět, {jmeno}! \n\n");
 
-            Console.WriteLine($" - Celková hodnota:   {d.CelkovaHodnota} {aktualniMena}");
+            Console.WriteLine($" - Celková hodnota:   {d.CelkovaHodnota}");
             // Math.Round zaokrouhlí na 1 desetinné místo, aby výsledek vypadal přehledně
             Console.WriteLine($" - Plnění plánu:      {Math.Round(d.ProcentoPlneni, 1)} %");
             Console.WriteLine($" - Počet zakázek:     {d.PocetZakazek}");
@@ -235,7 +243,7 @@ namespace Zakázkovna.Services
         public void ZobrazitRozluckovouZpravu()
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = BarvaAplikace;
             Console.WriteLine("==============================================");
             Console.WriteLine("  Těším se na příští setkání. Na shledanou!   ");
             Console.WriteLine("==============================================");
@@ -271,6 +279,14 @@ namespace Zakázkovna.Services
         public void ZobrazitInformacniZpravu(string zprava)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(zprava);
+            Console.ResetColor();
+        }
+        
+        public void ZobrazitTematickouZpravu(string zprava)
+        {
+            // Použíje globální barvu, kterou jsme nastavili v Program.cs
+            Console.ForegroundColor = BarvaAplikace;
             Console.WriteLine(zprava);
             Console.ResetColor();
         }
@@ -397,6 +413,22 @@ namespace Zakázkovna.Services
                     z.Popis.Length > 50 ? z.Popis.Substring(0, 47) + "..." : z.Popis);
             }
             Console.WriteLine("-----------------------------------------------------------------------------------------------------------------");
+        }
+        
+        // Pomocná metoda pro získání překladu textu podle aktuálně zvoleného jazyka
+        public string ZiskatPreklad(string klic)
+        {
+            // Načtení aktuálního jazyka z konfigurace
+            string jazyk = SK.Nastaveni.Jazyk; 
+
+            // Kontrola, zda existuje slovník pro daný jazyk a zda obsahuje požadovaný klíč
+            if (SK.Slovniky.ContainsKey(jazyk) && SK.Slovniky[jazyk].ContainsKey(klic))
+            {
+                return SK.Slovniky[jazyk][klic]; // Vrátí přeložený text z JSONu
+            }
+
+            // Pokud překlad nebo jazyk chybí, vrátí se samotný klíč jako fallback
+            return $"[{klic}]"; 
         }
     }
 }

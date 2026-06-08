@@ -9,15 +9,18 @@ namespace Zakázkovna.Services
         #if DEBUG
             private readonly string cestaProfil = "../../../Database/profil.json";
             private readonly string cestaNastaveni = "../../../Database/nastaveni.json";
+            private readonly string cestaLokalizace = "../../../Database/lokalizace.json";
         #else
-        private readonly string cestaProfil = "Database/profil.json";
+            private readonly string cestaProfil = "Database/profil.json";
             private readonly string cestaNastaveni = "Database/nastaveni.json";
+            private readonly string cestaLokalizace = "Database/lokalizace.json";
         #endif
 
 
-        // Veřejné vlastnosti – SpravceInterfacu a SpravceAnalyzy je mohou číst, ale ne přepisovat
+        // Veřejné vlastnosti – SpravceInterfacu a SpravceAnalyzy mohou číst, ale ne přepisovat
         public Profil Profil { get; private set; }
         public Nastaveni Nastaveni { get; private set; }
+        public Dictionary<string, Dictionary<string, string>> Slovniky { get; private set; } = new();
 
 
         // Konstruktor – při vytvoření objektu hned načteme data ze souborů
@@ -25,6 +28,7 @@ namespace Zakázkovna.Services
         {
             Profil = Nacist<Profil>(cestaProfil);
             Nastaveni = Nacist<Nastaveni>(cestaNastaveni);
+            Slovniky = Nacist<Dictionary<string, Dictionary<string, string>>>(cestaLokalizace);
         }
 
 
